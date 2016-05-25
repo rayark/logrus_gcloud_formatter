@@ -3,8 +3,6 @@ package logrus_gcloud_formatter
 import (
 	"encoding/json"
 	"fmt"
-	"time"
-
 	"github.com/Sirupsen/logrus"
 )
 
@@ -41,7 +39,7 @@ func (f *LogrusGoogleCloudFormatter) Format(entry *logrus.Entry) ([]byte, error)
 		fields[k] = v
 	}
 
-	fields["time"] = entry.Time.Format(time.RFC3339Nano)
+	fields["timestamp"] = entry.Time.Unix()
 	fields["message"] = entry.Message
 	fields["severity"] = levelToString(entry.Level)
 
