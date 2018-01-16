@@ -44,7 +44,11 @@ func (f *LogrusGoogleCloudFormatter) Format(entry *logrus.Entry) ([]byte, error)
 		}
 	}
 
-	fields["timestamp"] = entry.Time.Unix()
+	epoch := entry.Time.Unix()
+	epoch_micros := epoch*int64(1000000) + int64(entry.Time.Nanosecond()/1000)
+
+	fields["timestamp_micros"] = epoch_micros
+	fields["timestamp"] = epoch
 	fields["message"] = entry.Message
 	fields["severity"] = levelToString(entry.Level)
 
